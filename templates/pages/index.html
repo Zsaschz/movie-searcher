@@ -30,6 +30,12 @@
                         <span class="link-text bebas">BOOKMARKS</span>
                     </a>
                 </li>
+                <li class="nav-item" id="bookmarks">
+                    <a class="nav-link" onclick="toggleMode()">
+                        <svg width="2rem" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="adjust" class="svg-inline--fa fa-adjust fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M8 256c0 136.966 111.033 248 248 248s248-111.034 248-248S392.966 8 256 8 8 119.033 8 256zm248 184V72c101.705 0 184 82.311 184 184 0 101.705-82.311 184-184 184z"></path></svg>
+                        <span class="link-text bebas">TOGGLEMODE</span>
+                    </a>
+                </li>
             </ul>
         </nav>
         
@@ -46,6 +52,28 @@
     let currTitle = ""
     let currYear = ""
     const resultList = document.querySelector(".result-list")
+
+    const toggleMode = () => {
+        const body = document.body
+        const mode = localStorage.getItem("theme")
+        if (mode === "light") {
+            body.classList.remove("light")
+            localStorage.setItem("theme", "dark")
+        } else {
+            body.classList.add("light")
+            localStorage.setItem("theme", "light")
+        }
+    }
+
+    const getMode = () => {
+        const body = document.body
+        const mode = localStorage.getItem("theme")
+        if (mode === "light") {
+            body.classList.add("light")
+        } else {
+            body.classList.remove("light")
+        }
+    }
     
     const getMovies = async (url) => {
         let res = ""
@@ -148,35 +176,39 @@
         console.log(json)
         console.log(type)
 
-        for(let [i, value] of Object.entries(json)){
-            let movie = json[i]
-            let imgUrl = movie.Poster === "N/A" ? "{% static 'noimg.jpg' %}" : movie.Poster;
-            let key = '' + movie.imdbID
-            res += `
-                    <li class="result-item">
-                        <img class="result-img" src=${imgUrl} alt="">
-                        <div class="item-text">
-                            <p class="result-title">${movie.Title}</p>
-                            <div class="result-detail">
-                                <p class="result-year bebas">${movie.Year}</p>
-                                <p class="result-line">|</p>
+        if (Object.keys(json).length === 0) {
+            target.innerHTML = "No movies added"
+        } else {
+            for(let [i, value] of Object.entries(json)){
+                let movie = json[i]
+                let imgUrl = movie.Poster === "N/A" ? "{% static 'noimg.jpg' %}" : movie.Poster;
+                let key = '' + movie.imdbID
+                res += `
+                        <li class="result-item">
+                            <img class="result-img" src=${imgUrl} alt="">
+                            <div class="item-text">
+                                <p class="result-title">${movie.Title}</p>
+                                <div class="result-detail">
+                                    <p class="result-year bebas">${movie.Year}</p>
+                                    <p class="result-line">|</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="button">
-                            <button id="add-loved" onclick={removeLocalStorage('${type}','${key}')}><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" class="svg-inline--fa fa-times fa-w-11" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
-                            </button>
-                        </div>
-                    </li>
-                    `
+                            <div class="button">
+                                <button id="add-loved" onclick={removeLocalStorage('${type}','${key}')}><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" class="svg-inline--fa fa-times fa-w-11" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
+                                </button>
+                            </div>
+                        </li>
+                        `
+            }
+            target.innerHTML = res
         }
-        target.innerHTML = res
+
     }
 
     const removeLocalStorage = (type, key) => {
         console.log(type)
         let storage = JSON.parse(localStorage.getItem(type))
         console.log(storage)
-        // storage.remove(key)
         delete storage[key]
         console.log(storage)
         localStorage.setItem(type, JSON.stringify(storage))
@@ -203,7 +235,9 @@
             document.querySelector("#bookmarks").classList.add("current");
         }
 
-    // removeLocalStorage("bookmarks", 1)
+    // toggleMode()
+    getMode()
+
     </script>
     {% block script %}{% endblock script %}
 </html>

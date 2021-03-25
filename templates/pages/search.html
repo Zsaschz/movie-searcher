@@ -8,8 +8,14 @@
 <div class="search">
     <p class="bebas logo">NETFLEX</p>
     <form action="" class="search-bar">
-        <input type="text" name="title" id="search-title">
-        <input type="number" name="number" id="search-year">
+        <div class="title-bar">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="search-title">
+        </div>
+        <div class="year-bar">
+            <label for="number">Year</label>
+            <input type="number" name="number" id="search-year">
+        </div>
         <input type="submit" class="bebas" id="search-submit" value="SEARCH">
     </form>
     <p class="bebas atr" id="atr1">MOVIES</p>
@@ -22,28 +28,32 @@
     <div class="modal">
         <div class="modal-header">
             <div class="title">Blade Runner 2049</div>
-            <button class="close-button">&times;</button>
-            <button class="close-button">&times;</button>
-            <button class="close-button">&times;</button>
+            <div class="modal-button">
+                <button class="modal-loved-button"><svg height="1.5rem" aria-hidden="true" focusable="false" data-prefix="far" data-icon="heart" class="svg-inline--fa fa-heart fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"></path></svg></button>
+                <button class="modal-bookmarks-button"><svg height="1.5rem" aria-hidden="true" focusable="false" data-prefix="far" data-icon="bookmark" class="svg-inline--fa fa-bookmark fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M336 0H48C21.49 0 0 21.49 0 48v464l192-112 192 112V48c0-26.51-21.49-48-48-48zm0 428.43l-144-84-144 84V54a6 6 0 0 1 6-6h276c3.314 0 6 2.683 6 5.996V428.43z"></path></svg></button>
+                <button class="modal-close-button"><svg height="1.5rem" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" class="svg-inline--fa fa-times fa-w-11" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg></button>
+            </div>
         </div>
         <div class="modal-body">
             <img class="modal-img" src="https://m.media-amazon.com/images/M/MV5BMTYzODQzYjQtNTczNC00MzZhLTg1ZWYtZDUxYmQ3ZTY4NzA1XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SX300.jpg" alt="">
             <div class="modal-text">
                 <div class="modal-detail">
                     <p class="modal-year bebas">2017</p>
-                    <p class="modal-line">|</p>
+                    <p class="result-line">|</p>
                     <p class="modal-duration">121 Min</p>
                 </div>
-                   <p class="modal-rating">IMDB 8.0</p>
-                   <p class="modal-plot">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Modi nisi corporis libero quia, iste sequi enim tempora temporibus illum quod.</p>
+                   <p class="modal-rating bebas">IMDB 8.0</p>
+                   <p class="modal-plot">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa eos soluta exercitationem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique minima totam aperiam tempora ipsam sunt. Impedit odio dolorum natus beatae. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Numquam, iure expedita! Ipsum tempora aperiam cupiditate! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Modi nisi corporis libero quia, iste sequi enim tempora temporibus illum quod.</p>
             </div>
         </div>
     </div>
     <div id="overlay"></div>
-</div>
-    
 
+</div>
 {% endblock content %}
 
 {% block script %}
+<script>
+    
+</script>
 {% endblock script %}
