@@ -51,8 +51,8 @@
     let page = 1
     let currTitle = ""
     let currYear = ""
-    const resultList = document.querySelector(".result-list")
-    const search = document.querySelector('.search')
+    let resultList = document.querySelector("#search-list")
+    let search = document.querySelector('.search')
 
     const toggleMode = () => {
         const body = document.body
@@ -84,7 +84,8 @@
                 jsonResponse.Search.map(movie => {
                     let imgUrl = movie.Poster === "N/A" ? "{% static 'noimg.jpg' %}" : movie.Poster;
                     let key = '' + movie.imdbID
-                    res += (`<li class="result-item">
+                    res += (`
+                    <li class="result-item">
                         <img class="result-img" src=${imgUrl} alt="" data-modal-target="#modal-${movie.imdbID}">
                         <div class="item-text">
                             <p class="result-title">${movie.Title}</p>
@@ -112,17 +113,16 @@
                         }
                     })
                 )
-                return [res, resModal.join("\n")];
+                resModal = resModal.join('\n')
+                return [res, resModal];
             }
         }
     }
 
-    const searchBar = document.querySelector("#search-submit")
-    if (searchBar !== null) {
-        searchBar.addEventListener('click', async (e)=> {
-            e.preventDefault();
-            let title = "s=" + document.querySelector("#search-title").value.replaceAll(" ", "+")
-            let year = document.querySelector("#search-year").value !== "" ? `&y=${document.querySelector("#search-year").value}` : "";
+    const searchMovie = async () => {
+        let title = "s=" + document.querySelector("#search-title").value.replaceAll(" ", "+")
+        let year = document.querySelector("#search-year").value !== "" ? `&y=${document.querySelector("#search-year").value}` : "";
+        document.querySelector(".result-text.bebas").innerHTML = "Results for: " + document.querySelector("#search-title").value
             if (currTitle !== title) {
                 currTitle = title;
                 page = 1
@@ -138,11 +138,10 @@
             page += 1;
     
             let res = await getMovies(url);
-            resultList.innerHTML += res[0]
-            search.innerHTML += res[1]
+            resultList.innerHTML = res[0]
+            search.insertAdjacentHTML('beforeend', res[1])
     
             setUpModalsButton()
-        })
     }
 
     const searchNext = async () => {
@@ -150,10 +149,28 @@
             let url = apiUrl + currTitle + currYear + "&page=" + page;
             page += 1;
             let res = await getMovies(url)
-            resultList.innerHTML += res[0];
-            search.innerHTML += res[1];
+            if(res !== undefined){
+                resultList.insertAdjacentHTML('beforeend', res[0]);
+                search.insertAdjacentHTML('beforeend', res[1]);
+            }
         }
         setUpModalsButton()
+    }
+
+    const forms = document.querySelector("#forms")
+    if (forms !== null) {
+        forms.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            searchMovie()
+        })
+    }
+
+    const searchBar = document.querySelector("#search-submit")
+    if (searchBar !== null) {
+        searchBar.addEventListener('click', async (e) => {
+            e.preventDefault();
+            searchMovie()
+        })
     }
 
     const addLocalStorage = async (type, key) => {
@@ -189,7 +206,7 @@
             </div>
             <div class="modal-body">
                 <div class="atr-modals bebas">${movie.Title}</div>
-                <img class="modal-img" src=${imgUrl}alt="">
+                <img class="modal-img" src=${imgUrl} alt="">
                 <div class="modal-text">
                     <div class="modal-detail">
                         <p class="modal-year bebas">${movie.Year}</p>
@@ -238,7 +255,7 @@
                         `
             }
             target.innerHTML = resItem
-            search.innerHTML += resModal
+            target.innerHTML += resModal
             setUpModalsButton()
         }
 
@@ -253,23 +270,23 @@
     }
 
     window.onscroll = function(ev) {
-        if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 10) {
+        if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 5) {
             searchNext()
             }
     };
 
     let list = document.querySelectorAll(".nav-item")
-        list.forEach(item => {
-            item.classList.remove("current");
-        })    
+    list.forEach(item => {
+        item.classList.remove("current");
+    })    
 
-        if(location.pathname === "/") {
-            document.querySelector("#search").classList.add("current");
-        } else if (location.pathname === "/loved/") {
-            document.querySelector("#liked").classList.add("current");
-        } else if (location.pathname === "/bookmarks/") {
-            document.querySelector("#bookmarks").classList.add("current");
-        }
+    if(location.pathname === "/") {
+        document.querySelector("#search").classList.add("current");
+    } else if (location.pathname === "/loved/") {
+        document.querySelector("#liked").classList.add("current");
+    } else if (location.pathname === "/bookmarks/") {
+        document.querySelector("#bookmarks").classList.add("current");
+    }
 
     const setUpModalsButton = () => {
         const openModalButtons = document.querySelectorAll('[data-modal-target]')
@@ -279,7 +296,7 @@
         overlay.addEventListener('click', () => {
         const openedModals = document.querySelectorAll('.modal.active')
         openedModals.forEach(modal => closeModal(modal))
-    })
+        })
 
         openModalButtons.forEach(button => {
             button.addEventListener('click', () => {

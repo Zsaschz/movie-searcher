@@ -7,20 +7,21 @@
 {% block content %}
 <div class="search">
     <p class="bebas logo">NETFLEX</p>
-    <form action="" class="search-bar">
-        <div class="title-bar">
-            <label for="title">Title</label>
-            <input type="text" name="title" id="search-title">
-        </div>
-        <div class="year-bar">
-            <label for="number">Year</label>
-            <input type="number" name="number" id="search-year">
-        </div>
-        <input type="submit" class="bebas" id="search-submit" value="SEARCH">
+    <form action="" class="search-bar" id="forms">
+            <div class="title-bar">
+                <label for="title">Title</label>
+                <input type="text" name="title" id="search-title">
+            </div>
+            <div class="year-bar">
+                <label for="number">Year</label>
+                <input type="number" name="number" id="search-year">
+            </div>
+            <input type="submit" class="bebas" id="search-submit" value="SEARCH">
     </form>
     <p class="bebas atr" id="atr1">MOVIES</p>
     <div class="results-container">
-        <ul class="result-list">
+        <p class="result-text bebas"></p>
+        <ul class="result-list" id="search-list">
         </ul>
     </div>
     <div class="overlay" id="overlay"></div>
