@@ -255,6 +255,12 @@ label {
     4px -4px 4px 4px rgba(255, 255, 255, 0.05);
   border-radius: 10px;
   margin: 1.5rem;
+  transition: 300ms ease-out;
+}
+
+.result-item:hover {
+  box-shadow: 0px 0px 8px 4px rgba(192, 47, 46, 0.5);
+  transform: scale(1.05);
 }
 
 .button {
@@ -301,19 +307,49 @@ label {
 .result-item:nth-last-child(3),
 .result-item:nth-last-child(2),
 .result-item:nth-last-child(1) {
-  /* animation: slide 600ms ease-out forwards; */
+  animation: slide 600ms ease-out forwards;
 }
 
-/* @keyframes slide {
+@keyframes slide {
   from {
-    transform: translateY(20%);
+    transform: translateY(8%);
     opacity: 0;
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
-} */
+}
+
+.progress {
+  background: var(--bg-third);
+  justify-content: flex-start;
+  border-radius: 100px;
+  align-items: center;
+  position: relative;
+  padding: 0 5px;
+  display: flex;
+  height: 1rem;
+  width: 14rem;
+}
+
+.progress-value {
+  animation: load 3s normal forwards;
+  box-shadow: 0 5px 40px -10px var(--accent);
+  border-radius: 100px;
+  background: var(--text-primary);
+  height: 0.8rem;
+  width: 0;
+}
+
+@keyframes load {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 68%;
+  }
+}
 
 .result-img {
   width: 100%;
@@ -417,11 +453,11 @@ label {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 50%;
+  width: 70%;
   font-size: 13rem;
   z-index: -1;
   color: var(--text-second);
-  opacity: 0.2;
+  opacity: 0.15;
 }
 
 .modal-text {
@@ -450,7 +486,6 @@ label {
 .modal-img {
   margin: 1.5rem 0;
   display: block;
-  /* width: 15rem; */
   max-width: 15rem;
   height: auto;
   border-radius: 10px;

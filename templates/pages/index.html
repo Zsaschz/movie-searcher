@@ -120,6 +120,10 @@
     }
 
     const searchMovie = async () => {
+        resultList.innerHTML = `
+            <div class="progress">
+                <div class="progress-value"></div>
+            </div>`
         let title = "s=" + document.querySelector("#search-title").value.replaceAll(" ", "+")
         let year = document.querySelector("#search-year").value !== "" ? `&y=${document.querySelector("#search-year").value}` : "";
         document.querySelector(".result-text.bebas").innerHTML = "Results for: " + document.querySelector("#search-title").value
